@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portofolio</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: cadetblue;
+      }
+
+      header {
+        background-color: transparent;
+        backdrop-filter: blur(8px);
+        position: sticky;
+        top: 0;
+      }
+
+      .nama {
+        font-size: x-large;
+      }
+
+      .link-nav {
+        display: flex;
+      }
+
+      .link-nav li {
+        list-style: none;
+      }
+
+      .link-nav a {
+        text-align: center;
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        margin-right: 25px;
+        border: solid 1px skyblue;
+        border-radius: 6px;
+        padding: 3px 8px;
+        font-weight: normal;
+        transition-duration: 0.3s;
+      }
+
+      .link-nav a:hover {
+        background-color: skyblue;
+        color: black;
+      }
+
+      section {
+        min-height: 100vh;
+      }
+
+      #home {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .profil img {
+        border: solid 2px black;
+        border-radius: 50%;
+        width: 18rem;
+      }
+
+      .about img {
+        width: 100px;
+      }
+      .ya{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 17px 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="ya">
+        <div class="nama">
+          <h2 class="nama">Dava Galang Samudra</h2>
+        </div>
+
+        <nav>
+          <ul class="link-nav">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#achievement">Achievements</a></li>
+            <li><a href="#contacts">Contacts</a></li>
+          </ul>
+        </nav>
+      </div>
+      <hr>
+    </header>
+    <section id="home">
+      <div>
+        <div class="profil">
+          <img src="asset/sigma_male.jpg" alt="" />
+        </div>
+        <div class="profil-nama">
+          <h2>Dava Galang Samudra</h2>
+          <span>Programmer | !gooner | Smeas</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="about">
+        <img src="sigma_maleV2.jpg" alt="" />
+      </div>
+    </section>
+  </body>
+</html>
