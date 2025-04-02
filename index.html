@@ -9,21 +9,26 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        scroll-behavior: smooth;
       }
-
-      body {
-        background-color: cadetblue;
-      }
-
       header {
         background-color: transparent;
         backdrop-filter: blur(8px);
         position: sticky;
         top: 0;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-bottom: solid 1.3px white;
       }
-
+      .ya{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 17px 20px;
+      }
       .nama {
         font-size: x-large;
+        color: white;
       }
 
       .link-nav {
@@ -66,24 +71,48 @@
       }
 
       .profil img {
-        border: solid 2px black;
+        border: solid 2px white;
         border-radius: 50%;
         width: 18rem;
       }
-
-      .about img {
-        width: 100px;
+      .profil-nama{
+        color: white;
       }
-      .ya{
+      #about {
         display: flex;
-        justify-content: space-between;
+        justify-items: center;
         align-items: center;
-        padding: 17px 20px;
+        padding: 0 30px;
+        
       }
+      .about{
+        display: flex;
+        justify-items: center;
+      }
+      .about-img img {
+        width: 15vh;
+        height: 65vh;
+        border-radius: 10px;
+        border: solid 1px white;
+      }
+      .about .info{
+        margin: 8px 35px;
+      }
+      .info span, p{
+        display: block;
+        font-size: larger;
+        color: white;
+      }
+      .info span a{
+        text-decoration: none;
+        color: blue;
+      }
+      
     </style>
   </head>
 
   <body>
+    <div>
     <header>
       <div class="ya">
         <div class="nama">
@@ -100,7 +129,7 @@
           </ul>
         </nav>
       </div>
-      <hr>
+      
     </header>
     <section id="home">
       <div>
@@ -113,10 +142,24 @@
         </div>
       </div>
     </section>
-
+    </div>
     <section id="about">
       <div class="about">
-        <img src="sigma_maleV2.jpg" alt="" />
+        <div class="about-img">
+          <img src="asset/sigma_maleV2.jpg" alt="" />
+        </div>
+        <div class="info">
+          <span>Nama: Dava Galang Samudra</span><br>  
+          <span>Umur: 16 Tahun</span><br>  
+          <span>Status: Pelajar</span><br>  
+          <span>
+            Pendidikan: 
+            <a href="https://dapo.dikdasmen.go.id/sekolah/BC4BAC0EEC433676E6C2" target="_blank" >SDN Lidah Wetan 2/462</a>,
+            <a href="https://smpn16sby.sch.id/" target="_blank">SMPN 16 Surabaya</a>,
+            <a href="https://www.smkn1-sby.sch.id/" target="_blank">SMKN 1 Surabaya</a>
+          </span><br>
+          <p>Deskripsi: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
       </div>
     </section>
   </body>
