@@ -400,7 +400,7 @@ if (!empty($_POST)){
   <section id="about">
     <div class="about">
       <div class="about-img">
-        <img src="asset/sigma_maleV2.jpg" alt="" />
+        <img src="asset/about_profil.jpg" alt="" />
       </div>
       <div class="info">
         <span>Nama: Dava Galang Samudra</span><br />
