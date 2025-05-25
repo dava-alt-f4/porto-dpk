@@ -1,6 +1,20 @@
 <?php
 session_start();
-session_destroy();
+if(isset($_SESSION['admin'])) {
+  session_destroy();
+}
+$hasil = false;
+if (!empty($_POST)){
+    $pdo = require 'koneksi.php';
+    $sql = "INSERT INTO kontak (email, pesan) VALUES (:email, :pesan)";
+    $query = $pdo->prepare($sql);
+    $query->execute(array(
+        'email' => $_POST['email'],
+        'pesan' => $_POST['pesan']
+    ));
+    $hasil = true;
+    unset($_POST);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -241,12 +255,16 @@ session_destroy();
     .deskripsi p {
       color: white;
     }
-
+    .deskripsi a{
+      color: lightblue;
+      font-style: italic;
+    }
     #contacts {
       display: flex;
       justify-content: center;
       align-items: center;
       background: linear-gradient(to bottom, #0B2B40, #010A12);
+      flex-direction: column;
     }
 
     .form {
@@ -261,6 +279,7 @@ session_destroy();
       display: flex;
       color: white;
       backdrop-filter: blur(8px);
+      flex-direction: column;
     }
 
     .form-container {
@@ -395,12 +414,7 @@ session_destroy();
           <a href="https://smpn16sby.sch.id/" target="_blank">&#8981; SMPN 16 Surabaya,</a>
           <a href="https://www.smkn1-sby.sch.id/" target="_blank">&#8981; SMKN 1 Surabaya</a> </span><br />
         <p>
-          Deskripsi: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
+          Deskripsi: Saya adalah pelajar di SMKN 1 Surabaya jurusan Rekayasa Perangkat Lunak dengan minat kuat di bidang pengembangan web, khususnya di sisi backend development. Saya memiliki beberapa keahlian teknis di backend seperti PHP dan database MySQL. Saya antusias belajar dan berkontribusi dalam proyek pengembangan aplikasi web yang efisien dan scalable.
         </p><br>
 
         <div class="skill">
@@ -420,100 +434,40 @@ session_destroy();
     <div class="tabel">
       <table>
         <tbody>
-          <tr>
+          <?php
+            $pdo = require 'koneksi.php';
+            $sql = 'SELECT id, nama, status, link, deskripsi, gambar FROM projects';
+            $query = $pdo->prepare($sql);
+            $query->execute();
+            $kolom = 0;
+            ?>
+            <?php while($data = $query->fetch()) {
+              $base64 = base64_encode($data['gambar']); ?>
+              <?php if($kolom % 3 == 0) {
+                echo'<tr>';
+              } ?>
             <td>
               <div class="container">
                 <div class="co-container">
                   <div class="frame">
-                    <img
-                      src="asset/scratchlogo.png"
-                      alt="" />
+                    <?php echo "<img src= 'data:image/*;base64, $base64'  alt=''>" ?>
                   </div>
                   <div class="deskripsi">
-                    <span>Scrath | </span><i>complete&#10004;</i>
-                    <p>Pembuatan game sederhana</p>
+                    <span> <?php echo $data['nama']; ?> | </span><i><?php echo $data['status']; ?></i> <span>| <a href="<?php echo $data['link']; ?>">Click Me</a> </span>
+                    <p><?php echo $data['deskripsi']; ?></p>
                   </div>
                 </div>
               </div>
             </td>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/itcProject.jpg"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span>ITC Web | </span><i>complete&#10004;</i>
-                    <p>Pembuatan Web dengan tema CyberSec</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/maintenance.png"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span>Bom Game | </span><i>&#128683;incomplete</i>
-                    <p>Web Game sederhana menghindari bom</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/Screenshot (118).png"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span> SoapGame | </span><i>complete&#10004;</i>
-                    <p>Global Game Jam Project, game sederhana tema bubble</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/sigma_male.jpg"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span>Nama Project | </span><i>&#128683;in/complete&#10004;</i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/Screenshot (117).png"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span>Nama Project | </span><i>&#128683;in/complete&#10004;</i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
+            <?php $kolom++;
+            if($kolom%3==0) {
+              echo'<tr>';
+            }?>
+            <?php } ?>
+              <?php 
+              if ($kolom % 3 != 0) {
+                  echo "</tr>"; 
+              }?>
         </tbody>
       </table>
     </div>
@@ -523,70 +477,40 @@ session_destroy();
     <div class="tabel">
       <table>
         <tbody>
-          <tr>
+          <?php
+            $pdo = require 'koneksi.php';
+            $sql = 'SELECT id, nama, deskripsi, gambar FROM achievements';
+            $query = $pdo->prepare($sql);
+            $query->execute();
+            $kolom = 0;
+            ?>
+            <?php while($data = $query->fetch()) {
+              $base64 = base64_encode($data['gambar']); ?>
+              <?php if($kolom % 3 == 0) {
+                echo'<tr>';
+              } ?>
             <td>
               <div class="container">
                 <div class="co-container">
                   <div class="frame">
-                    <img
-                      src="asset/Screenshot (117).png"
-                      alt="" />
+                    <?php echo "<img src= 'data:image/*;base64, $base64'  alt=''>" ?>
                   </div>
                   <div class="deskripsi">
-                    <span>Sertifikat Kursus Level 1</span>
-                    <p>Bahasa Pemrograman C++</p>
+                    <span> <?php echo $data['nama']; ?></span>
+                    <p><?php echo $data['deskripsi']; ?></p>
                   </div>
                 </div>
               </div>
             </td>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/Screenshot (118).png"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span>Sertifikat Kursus Level 2</span>
-                    <p>Pengembangan Web Dinamis</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/GGJ.jpeg"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span>Sertifikat GGJ</span>
-                    <p>Global Game jam 2024</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="container">
-                <div class="co-container">
-                  <div class="frame">
-                    <img
-                      src="asset/TOEIC.jpeg"
-                      alt="" />
-                  </div>
-                  <div class="deskripsi">
-                    <span>Sertifikat TOEIC</span>
-                    <p>Tes bahasa inggris TOEIC</p>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
+            <?php $kolom++;
+            if($kolom%3==0) {
+              echo'<tr>';
+            }?>
+            <?php } ?>
+              <?php 
+              if ($kolom % 3 != 0) {
+                  echo "</tr>"; 
+              }?>
         </tbody>
       </table>
     </div>
@@ -595,11 +519,11 @@ session_destroy();
   <section id="contacts">
     <div class="form">
       <?php
-      include 'kontak.php';
-      if ($hasil == true) {
-        echo'<p>Sukses</p>';
-       } ?>
-      <form action="kontak.php" method="post">
+      
+      if ($hasil == true) { ?>
+        <p style="color: lightgreen ;">Pesan sukses dikirim</p>
+       <?php } ?>
+      <form action="" method="post">
         <div class="form-container">
           <label for="">Email:</label>
           <div class="form-input">
